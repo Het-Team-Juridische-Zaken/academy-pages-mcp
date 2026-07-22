@@ -1,0 +1,22 @@
+{
+  "name": "academy-pages-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Prototype MCP-server: maakt, werkt bij en publiceert HTJZ Academy SharePoint-pagina's via de Microsoft Graph API. Geen PowerShell.",
+  "bin": {
+    "academy-pages-mcp": "src/index.mjs"
+  },
+  "scripts": {
+    "start": "node src/index.mjs",
+    "demo": "node bin/demo.mjs"
+  },
+  "dependencies": {
+    "@azure/msal-node": "^2.16.2",
+    "@modelcontextprotocol/sdk": "^1.11.0",
+    "zod": "^3.23.8"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
