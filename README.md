@@ -16,6 +16,8 @@ Vier tools voor Claude:
 | `academy_update_page_text` | Werkt de tekst van een pagina bij (blijft concept tot publiceren). Argumenten: `id`, `bodyHtml`. |
 | `academy_publish_page` | Publiceert een pagina. Argument: `id`. |
 | `academy_list_pages` | Lijst de pagina's op (id, naam, titel, url). |
+| `academy_list_menu` | Toont het menu (QuickLaunch) met de id's, om een parent te kiezen. |
+| `academy_add_menu_item` | Zet een gepubliceerde pagina in het menu (optioneel onder een sectie). |
 
 Nieuwe pagina's zijn standaard **concept**. Dat sluit aan bij het model "iedereen levert, de eigenaar publiceert": Claude bouwt het concept, de eigenaar publiceert (of vraagt Claude dat te doen).
 
@@ -71,14 +73,17 @@ Daarna heeft Claude de vier tools hierboven.
 3. Overweeg de scope te beperken tot alleen de Academy-site met `Sites.Selected` in plaats van `Sites.ReadWrite.All` (schrijftoegang tot precies één site, niet alle sites). Netter en veiliger.
 4. Zet de client-id (en bij app-only de auth-gegevens) in de env van de connector.
 
+## Menu-beheer (extra permissie nodig)
+De Graph-API kan geen SharePoint-menu (QuickLaunch) aanpassen, dus `academy_list_menu` en `academy_add_menu_item` praten met de SharePoint REST-API. Dat vereist een SharePoint-token, en dus een **extra delegated permissie** op de app: **SharePoint > AllSites.Manage** (naast de Graph-permissie), met admin consent. De page-acties (tekst, banner, byline, publiceren) werken op Graph; alleen het menu gebruikt SharePoint.
+
 ## Beperkingen van dit prototype
-- Zet alleen tekst op de pagina. Banner (custom header) en eigenaar-byline zitten er nog niet in; die kunnen worden toegevoegd (Graph `titleArea` en het lijstveld `_AuthorByline`).
-- Geen menu-beheer (navigatie). Dat blijft voorlopig een aparte stap.
-- Delegated device-code is bedoeld voor een demo/persoonlijk gebruik; voor de hele firma is app-only met een gate of `Sites.Selected` de nette route.
+- Delegated device-code is bedoeld voor persoonlijk gebruik per persoon; voor de hele firma zonder per-persoon login is app-only met een gate of `Sites.Selected` de nette route.
+- De banner verwijst naar een bestaande afbeelding in SiteAssets (de tool uploadt zelf geen banners).
 
 ## Bestanden
 - `src/index.mjs` - de MCP-server en de tools.
-- `src/graph.mjs` - de Graph Pages-API-aanroepen.
-- `src/auth.mjs` - device-code login met tokencache.
+- `src/graph.mjs` - de Graph Pages-API-aanroepen (maken/bijwerken/publiceren, banner + byline).
+- `src/sharepoint.mjs` - de SharePoint REST-aanroepen voor het menu.
+- `src/auth.mjs` - device-code login met tokencache (Graph- en SharePoint-scope).
 - `src/canvas.mjs` - zet een HTML-fragment om in een tekst-webpart.
 - `bin/demo.mjs` - losse demo buiten Claude om.

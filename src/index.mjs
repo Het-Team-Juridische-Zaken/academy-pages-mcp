@@ -6,6 +6,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { createConceptPage, updatePageText, publishPage, listPages } from "./graph.mjs";
+import { listMenu, addMenuItem } from "./sharepoint.mjs";
 
 const server = new McpServer({ name: "academy-pages-mcp", version: "0.1.0" });
 
@@ -42,6 +43,20 @@ server.tool(
   "Lijst de pagina's op de Academy op (id, name, title, webUrl). Handig om te zien of iets al bestaat en om een id op te halen.",
   {},
   async () => { try { return ok(await listPages({ onDeviceCode })); } catch (e) { return fail(e); } }
+);
+
+server.tool(
+  "academy_list_menu",
+  "Toon het menu (QuickLaunch) van de Academy met de id's per item, zodat je een parent kunt kiezen om een pagina onder te hangen.",
+  {},
+  async () => { try { return ok(await listMenu({ onDeviceCode })); } catch (e) { return fail(e); } }
+);
+
+server.tool(
+  "academy_add_menu_item",
+  "Zet een gepubliceerde pagina in het menu. Geef title en pageUrl (server-relative, bv /sites/Academy/SitePages/Mijn.aspx). Optioneel parentId (uit academy_list_menu) om het onder een sectie te hangen. Doe dit pas NA publiceren.",
+  { title: z.string(), pageUrl: z.string(), parentId: z.number().optional() },
+  async (a) => { try { return ok(await addMenuItem(a, { onDeviceCode })); } catch (e) { return fail(e); } }
 );
 
 await server.connect(new StdioServerTransport());

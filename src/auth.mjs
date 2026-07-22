@@ -35,19 +35,21 @@ const pca = new PublicClientApplication({
   system: { loggerOptions: { loggerCallback() {}, piiLoggingEnabled: false, logLevel: LogLevel.Error } },
 });
 
-export async function getToken({ onDeviceCode } = {}) {
+export async function getToken({ scopes = SCOPES, onDeviceCode } = {}) {
+  // scopes standaard = Graph (Sites.ReadWrite.All). Voor het menu vragen we een
+  // SharePoint-token op (andere scope); MSAL haalt dat stil op met hetzelfde account.
   const cache = pca.getTokenCache();
   const accounts = await cache.getAllAccounts();
   if (accounts.length) {
     try {
-      const r = await pca.acquireTokenSilent({ account: accounts[0], scopes: SCOPES });
+      const r = await pca.acquireTokenSilent({ account: accounts[0], scopes });
       if (r?.accessToken) return r.accessToken;
     } catch {
       // token verlopen of geen refresh mogelijk -> val terug op device code
     }
   }
   const r = await pca.acquireTokenByDeviceCode({
-    scopes: SCOPES,
+    scopes,
     deviceCodeCallback: (resp) => (onDeviceCode ? onDeviceCode(resp) : console.error(resp.message)),
   });
   return r.accessToken;
