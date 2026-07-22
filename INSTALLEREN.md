@@ -8,7 +8,7 @@ Met deze tool kun je Claude vragen om pagina's op de HTJZ Academy te maken en bi
 - Bewerkrechten op de Academy. Heb je die nog niet? Vraag Edgar; het is voor hem twee klikken.
 
 ## Stap 1: installeren
-1. Dubbelklik op **install-macos.command** (Edgar deelt dit bestand met je).
+1. Download **install-macos.command** uit de Academy (Kennisbank, map Academy-tool) en dubbelklik het. Edgar kan het ook via Teams met je delen.
 2. macOS blokkeert het de eerste keer met een melding dat het niet geverifieerd kon worden. Dat is normaal bij een script dat niet uit de App Store komt. Doe dit:
    - Klik in de melding op **Gereed**. Klik **niet** op "Verplaats naar prullenmand".
    - Open **Systeeminstellingen** en ga naar **Privacy en beveiliging**.
