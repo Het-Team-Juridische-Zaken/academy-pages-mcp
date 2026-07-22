@@ -9,8 +9,13 @@ Met deze tool kun je Claude vragen om pagina's op de HTJZ Academy te maken en bi
 
 ## Stap 1: installeren
 1. Dubbelklik op **install-macos.command** (Edgar deelt dit bestand met je).
-2. Krijg je een waarschuwing "onbekende ontwikkelaar"? Klik dan met de rechtermuisknop op het bestand en kies **Open**, en daarna **Open** in het venster.
-3. Er opent een klein zwart venster (Terminal). Als er "KLAAR" staat, ben je klaar. Sluit het venster.
+2. macOS blokkeert het de eerste keer met een melding dat het niet geverifieerd kon worden. Dat is normaal bij een script dat niet uit de App Store komt. Doe dit:
+   - Klik in de melding op **Gereed**. Klik **niet** op "Verplaats naar prullenmand".
+   - Open **Systeeminstellingen** en ga naar **Privacy en beveiliging**.
+   - Scroll naar het kopje **Beveiliging**. Daar staat: "install-macos.command is geblokkeerd". Klik op **Toch openen**.
+   - Bevestig met je wachtwoord of Touch ID en klik nog een keer op **Openen**.
+   - (Op oudere Macs werkt ook: rechtermuisklik op het bestand, kies **Open**, en dan nog een keer **Open**.)
+3. Er opent een klein venster (Terminal). Staat er "KLAAR"? Dan is het gelukt. Sluit het venster.
 
 ## Stap 2: Claude herstarten
 Sluit Claude Desktop helemaal af en start het opnieuw. De tool laadt bij het opstarten.
