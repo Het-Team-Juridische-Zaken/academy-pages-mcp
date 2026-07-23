@@ -28,3 +28,8 @@ Nu draait de tool lokaal op elke Mac (via Node). Dat is te technisch gebleken vo
 
 ## Wat er hetzelfde blijft
 De tool doet nog steeds: pagina maken (tekst, banner, eigenaar), publiceren en in het menu zetten. Alleen de plek waar hij draait verandert (van elke Mac naar Azure), en het inloggen wordt een nette weblogin in plaats van een code in de terminal.
+
+## Extra functie: wekelijks overzicht (aangevraagd)
+Zodra de dienst op Azure draait, komt er een wekelijkse taak bij: die kijkt welke pagina's de afgelopen 7 dagen op de Academy zijn gepubliceerd of bijgewerkt, en post daar één kort overzichtsbericht van in huisstijl (als nieuws). Alleen posten als er iets nieuws is; lege weken overslaan.
+
+Technisch: dit is een timer (bijvoorbeeld een Azure Container Apps job of een Function met timer-trigger) die de bestaande dienst aanroept. **Let op de auth:** deze taak draait 's nachts zonder dat er een gebruiker inlogt, dus die kan niet "namens een gebruiker" (delegated) werken. Voor alleen dit wekelijkse overzichtsbericht is een **app-only** toegang nodig (de app post het zelf), strikt beperkt tot posten op de Academy-site (bij voorkeur via `Sites.Selected` op alleen die site). Dat is een gecontroleerde, afgebakende uitzondering: het gaat om één automatisch systeembericht, geen gebruiker-impersonatie. De rest van de tool (mensen die zelf pagina's maken) blijft gewoon per gebruiker (delegated).
