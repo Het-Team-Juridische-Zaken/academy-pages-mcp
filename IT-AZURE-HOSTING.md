@@ -4,6 +4,11 @@ Doel: de Academy-tool één keer centraal draaien, zodat collega's niets meer in
 
 Nu draait de tool lokaal op elke Mac (via Node). Dat is te technisch gebleken voor de meeste collega's. De oplossing: de tool als kleine webdienst op Azure, waar Claude via een URL mee verbindt (een "remote connector").
 
+## Stand van zaken: het risicovolle deel is bewezen
+Het lastigste onderdeel (per-gebruiker inloggen) is al gebouwd en getest. In een lokale proef logde een gebruiker via de browser in met het HTJZ-account (OAuth authorization code + PKCE, Entra), waarna de webdienst **namens die persoon** een pagina op de Academy aanmaakte en weer verwijderde, en het menu las. De delegated route (Optie A) werkt dus in een hosted webmodel. Wat resteert is vooral hosting en productie-afronding, geen open vraag meer.
+
+Voor de proef is in de app-registratie de redirect-URI `http://localhost:8080/auth/callback` toegevoegd (publieke client + PKCE, geen secret). Voor productie wordt dit een confidential client met een secret (in Key Vault) en de Azure-URL als redirect.
+
 ## Architectuur in het kort
 - Een kleine Node-webdienst (de MCP-connector) die over HTTPS draait.
 - De code staat op GitHub (`github.com/Het-Team-Juridische-Zaken/academy-pages-mcp`); Azure deployt daarvandaan.
